@@ -1,9 +1,18 @@
 # Calculator
 
-This is the repository that will hold your files for the calculator challenge.
+//Got a number, add to temp
 
-During this challenge you will:
-1. Fork this repo
-2. Make changes on your own copy
-3. Work through the [Calculator - Challenge](https://handbook.eda.nz/foundations/curriculum/stretch/sprint5-1-calculator) instructions.
-4. Enjoy calculating!
+// Got some symbol other than equals, add temp to our entries
+// then add our current symbol and clear temp
+
+  // Clear last entry
+
+  // Change multiply symbol to work with eval
+
+  // Change divide symbol to work with eval
+
+  // Got the equals sign, perform calculation
+
+// Swap the '-' symbol so text input handles it correctly
+
+  // Push number
