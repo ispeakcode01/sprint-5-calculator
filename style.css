@@ -45,7 +45,8 @@ body {
     width: 140px !important;
 }
 
-.terminal {
+#terminal {
     width: 390px;
+    font-size: x-large;
     height: 50px;
 }

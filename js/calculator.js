@@ -1,0 +1,7 @@
+var calc = (function() {
+
+
+    return {
+        
+    }
+}())
