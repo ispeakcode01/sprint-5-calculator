@@ -48,33 +48,50 @@ var lib = (function () {
             shouldClearTerminal = false
         }
 
-        var terminal = getTerminal()
-        terminal.value = terminal.value + this.innerHTML
+        setTerminalValue(getTerminal().value + this.innerHTML)
     }
 
     function showAnswer() {
+
+        /**
+         * If there are no value in the input array but has a value in the terminal
+         * then do nothing to it, keep the same number in the terminal
+         */
         if (inputs.length == 0 && getTerminalValue())
             return
+
+        /**
+         * If there are no value in the input array then just output nothing
+         * to the terminal
+         */
         if (inputs.length == 0) {
-            getTerminal().value = ""
+            setTerminalValue("")
             return
         }
-        /*
-        if (inputs[0])
-            getTerminal().value = inputs[0]
-        */
-       inputs[1] = getTerminalValue()
-       getTerminal().value = calculate()
-        
-        reset()
+
+
+        /**
+         * Here we know that index 0 in the inputs has a value
+         */
+        var value = getTerminalValue()
+        if (value != -1 && operator != "") {
+            inputs[1] = value
+            setTerminalValue(calculate())
+        } else {
+            setTerminalValue(inputs[0])
+        }
+
+        operator = ""
         shouldClearTerminal = true
 
 
     }
 
     function resetCalculator() {
-        reset()
-        getTerminal().value = ""
+        setTerminalValue("")
+        shouldClearTerminal = false
+        operator = ""
+        inputs = []
     }
 
     function flipTheNumberSign() {
@@ -86,30 +103,18 @@ var lib = (function () {
         }
     }
 
-    function reset() {
-        shouldClearTerminal = false
-        operator = ""
-        inputs = []
-    }
- 
     function handleOperator() {
-
 
         // Get the value from the terminal and store it 
         if (!shouldClearTerminal)
             inputs.push(getTerminalValue())
 
         // Check how many items in the input if two then perform the calculation
-        if (inputs.length == 2) {
-            inputs[0] = calculate()
-            inputs.pop()
-        }
+        if (inputs.length == 2)
+            calculate()
 
         operator = this.innerHTML
         shouldClearTerminal = true
-
-        console.log(inputs)
-        console.log(operator)
 
     }
 
@@ -117,32 +122,40 @@ var lib = (function () {
         var result = 0
         switch (operator.toLowerCase()) {
             case '%':
-                result = calc.modulus(inputs[0],inputs[1])
+                result = calc.modulus(inputs[0], inputs[1])
                 break
             case '/':
-                result = calc.divide(inputs[0],inputs[1])
+                result = calc.divide(inputs[0], inputs[1])
                 break
             case 'x':
-                result = calc.multiply(inputs[0],inputs[1])
+                result = calc.multiply(inputs[0], inputs[1])
                 break
             case '-':
-                result = calc.subtract(inputs[0],inputs[1])
+                result = calc.subtract(inputs[0], inputs[1])
                 break
             default:
-                result = calc.add(inputs[0],inputs[1])
+                result = calc.add(inputs[0], inputs[1])
                 break
         }
+        inputs[0] = result
+        if (inputs.length == 2)
+            inputs.pop()
+
         return result
     }
 
-    function clearTerminal() {
-        var terminal = getTerminal()
-        terminal.value = ""
+    function setTerminalValue(newValue) {
+        getTerminal().value = newValue
+    }
 
+    function clearTerminal() {
+        setTerminalValue("")
     }
 
     function getTerminalValue() {
-        return parseFloat(getTerminal().value)
+        var value = parseFloat(getTerminal().value)
+
+        return value ? value : -1
     }
 
     function getTerminal() {
