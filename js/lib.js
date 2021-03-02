@@ -18,11 +18,14 @@ var lib = (function () {
 
         var clearBtn = document.getElementById('clear')
         var resetBtn = document.getElementById('reset')
+        var minusPlusBtn = document.getElementById('minusplus')
 
+        minusPlusBtn.addEventListener('click', flipTheNumberSign)
         var equalBtn = document.getElementById('equal')
         clearBtn.addEventListener('click', clearTerminal)
         resetBtn.addEventListener('click', resetCalculator)
         equalBtn.addEventListener('click', showAnswer)
+
         for (var i = 0; i < numberBtns.length; i++) {
             numberBtns[i].addEventListener('click', handleNumberBtn)
         }
@@ -72,6 +75,15 @@ var lib = (function () {
     function resetCalculator() {
         reset()
         getTerminal().value = ""
+    }
+
+    function flipTheNumberSign() {
+        var value = getTerminalValue()
+        if (value) {
+            getTerminal().value = value * -1
+        } else {
+            getTerminal().value = "-"
+        }
     }
 
     function reset() {
@@ -130,8 +142,7 @@ var lib = (function () {
     }
 
     function getTerminalValue() {
-        var value = parseFloat(getTerminal().value)
-        return value ? value : 0
+        return parseFloat(getTerminal().value)
     }
 
     function getTerminal() {
