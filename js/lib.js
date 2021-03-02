@@ -96,10 +96,10 @@ var lib = (function () {
 
     function flipTheNumberSign() {
         var value = getTerminalValue()
-        if (value) {
-            getTerminal().value = value * -1
+        if (value == -1) {
+            setTerminalValue("-") 
         } else {
-            getTerminal().value = "-"
+            setTerminalValue(value * -1)
         }
     }
 
